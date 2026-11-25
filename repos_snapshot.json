@@ -22,7 +22,7 @@
   {
     "name": "langkah-kecil",
     "html_url": "https://github.com/radityobw/langkah-kecil",
-    "description": "Langkah Kecil adalah aplikasi permainan edukasi untuk anak-anak berkebutuhan khusus yang dibuat menggunakan game engine godot v4.5 dengan fitur feedback pengenalan emosi dan juga jadwal harian anak.",
+    "description": "Langkah Kecil adalah aplikasi permainan edukasi untuk anak-anak berkebutuhan khusus yang dibuat menggunakan game engine Godot v4.5 dengan fitur feedback pengenalan emosi dan juga jadwal harian anak.",
     "language": "GDScript",
     "stargazers_count": 0,
     "has_pages": false,
@@ -32,18 +32,8 @@
   {
     "name": "SIBENGKEL",
     "html_url": "https://github.com/radityobw/SIBENGKEL",
-    "description": "Web application repository built with Laravel Blade.",
-    "language": "Blade",
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "profil-app",
-    "html_url": "https://github.com/radityobw/profil-app",
-    "description": "Laravel Blade profile application project.",
-    "language": "Blade",
+    "description": "Sistem Informasi Bengkel Terpadu: platform web operasional bengkel, booking servis online, e-commerce suku cadang, dan portal pelanggan berbasis Laravel 12, PHP 8.2+, MySQL, dan Tailwind CSS.",
+    "language": "Blade / Laravel",
     "stargazers_count": 0,
     "has_pages": false,
     "homepage": "",
@@ -52,58 +42,8 @@
   {
     "name": "uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama",
     "html_url": "https://github.com/radityobw/uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama",
-    "description": "Tugas Kelompok B3 - Probabilitas dan Statistika",
-    "language": null,
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "CppProject",
-    "html_url": "https://github.com/radityobw/CppProject",
-    "description": "Kumpulan Project C++",
-    "language": "C++ / SWIG",
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "PythonProject",
-    "html_url": "https://github.com/radityobw/PythonProject",
-    "description": "Kumpulan Project Python.",
-    "language": "Python",
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "bio-3337250058",
-    "html_url": "https://github.com/radityobw/bio-3337250058",
-    "description": "HTML & CSS web bio exercise.",
-    "language": "CSS",
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "bio-3337250057",
-    "html_url": "https://github.com/radityobw/bio-3337250057",
-    "description": "Web bio repository.",
-    "language": null,
-    "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
-    "fork": false
-  },
-  {
-    "name": "git-starter",
-    "html_url": "https://github.com/radityobw/git-starter",
-    "description": "Sebuah perjalanan pertama saya menjelajahi git dan github",
-    "language": null,
+    "description": "Tugas Kelompok B3 - Probabilitas dan Statistika (Uji Hipotesis Rata-Rata 2 Populasi Ragam Asumsi Sama).",
+    "language": "Statistics",
     "stargazers_count": 0,
     "has_pages": false,
     "homepage": "",

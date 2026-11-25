@@ -14,7 +14,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 GITHUB_USER = "radityobw"
 BASE_URL = "https://radityobw.github.io"
 GSC_TOKEN = "6y-5Cff0WkeBj7_uWju39rv0nQnqmEgw81an57VJkGg"
-PRIORITY_FEATURED = ("SIDIK", "SIDIK-ML", "langkah-kecil")
+PRIORITY_FEATURED = ("SIDIK", "SIDIK-ML", "langkah-kecil", "SIBENGKEL")
 IGNORED_REPOS = {GITHUB_USER.lower(), f"{GITHUB_USER.lower()}.github.io"}
 
 PYPI_BADGES: Dict[str, str] = {
@@ -107,6 +107,8 @@ def _render_card(repo: Dict[str, Any], featured: bool) -> str:
         accent_cls += " accent-amber"
     elif name == "langkah-kecil":
         accent_cls += " accent-green"
+    elif name == "SIBENGKEL":
+        accent_cls += " accent-red"
 
     badges_html = ""
     if name in PYPI_BADGES:
@@ -194,7 +196,17 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
                 "name": "Radityo Budi Waskito",
                 "alternateName": GITHUB_USER,
                 "url": f"{BASE_URL}/",
-                "sameAs": [f"https://github.com/{GITHUB_USER}"] + [rp["html_url"] for rp in featured],
+                "affiliation": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "Universitas Sultan Ageng Tirtayasa",
+                },
+                "sameAs": [
+                    f"https://github.com/{GITHUB_USER}",
+                    "https://linkedin.com/in/radityobw",
+                    "https://instagram.com/radityo_bw",
+                    "https://pypi.org/project/sidik/",
+                    "https://pypi.org/project/sidik-ml/",
+                ] + [rp["html_url"] for rp in featured],
             },
             {
                 "@type": "ItemList",
@@ -207,6 +219,14 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
     featured_html = "\n".join(_render_card(r, featured=True) for r in featured)
     others_html = "\n".join(_render_card(r, featured=False) for r in others)
+    others_section = ""
+    if others:
+        others_section = (
+            f'\n    <section>\n'
+            f'      <h2>Other Public Repositories ({len(others)})</h2>\n'
+            f'      <div class="grid">\n{others_html}\n      </div>\n'
+            f'    </section>'
+        )
 
     index_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -251,6 +271,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       --blue: #0ea5e9;
       --amber: #f59e0b;
       --green: #10b981;
+      --red: #ef4444;
     }}
     * {{ box-sizing: border-box; }}
     body {{
@@ -309,6 +330,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
     .accent-blue {{ border-top: 4px solid var(--blue); }}
     .accent-amber {{ border-top: 4px solid var(--amber); }}
     .accent-green {{ border-top: 4px solid var(--green); }}
+    .accent-red {{ border-top: 4px solid var(--red); }}
     .card-top {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }}
     .card-top h3 {{ margin: 0; font-size: 17.5px; color: #f8fafc; word-break: break-word; }}
     .lang-pill {{
@@ -361,35 +383,29 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         <div>
           <h1>Radityo Budi Waskito (<code>@{GITHUB_USER}</code>)</h1>
           <p class="sub">
-            Informatics &amp; Cybersecurity developer building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), educational Godot software (<strong>Langkah Kecil</strong>), web apps, and open-source utilities.
+            Informatics student at Universitas Sultan Ageng Tirtayasa (UNTIRTA) building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), educational Godot software (<strong>Langkah Kecil</strong>), Laravel web platforms (<strong>SIBENGKEL</strong>), and open-source utilities.
           </p>
         </div>
       </div>
       <div class="hero-actions">
-        <a class="btn docs" href="https://github.com/{GITHUB_USER}">GitHub Profile</a>
-        <a class="btn" href="{BASE_URL}/SIDIK/">SIDIK</a>
-        <a class="btn" href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a>
+        <a class="btn docs" href="https://github.com/{GITHUB_USER}">GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/radityobw">LinkedIn</a>
+        <a class="btn" href="mailto:radityobudiw@gmail.com">Email</a>
         <a class="btn" href="https://jurnal.mediaakademik.com/index.php/jma/article/view/9068/6647">JMA Paper</a>
       </div>
     </header>
 
     <section>
-      <h2>Featured Projects &amp; Active Research Software</h2>
+      <h2>Pinned &amp; Featured Public Projects ({len(featured)})</h2>
       <div class="grid">
 {featured_html}
       </div>
     </section>
-
-    <section>
-      <h2>All Public GitHub Repositories ({len(repos)} Total)</h2>
-      <div class="grid">
-{others_html}
-      </div>
-    </section>
+{others_section}
 
     <footer>
       <span>Radityo Budi Waskito (@{GITHUB_USER}) - Auto-synced from GitHub API ({today})</span>
-      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="/sitemap.xml">Sitemap</a></span>
+      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
 </body>
