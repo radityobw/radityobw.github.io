@@ -22,21 +22,21 @@
   {
     "name": "langkah-kecil",
     "html_url": "https://github.com/radityobw/langkah-kecil",
-    "description": "Langkah Kecil adalah aplikasi permainan edukasi untuk anak-anak berkebutuhan khusus yang dibuat menggunakan game engine Godot v4.5 dengan fitur feedback pengenalan emosi dan juga jadwal harian anak.",
+    "description": "Inclusive educational game built with Godot 4.5 for children with special needs, featuring 6-emotion recognition feedback and drag-and-drop daily schedule management.",
     "language": "GDScript",
     "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
+    "has_pages": true,
+    "homepage": "https://radityobw.github.io/langkah-kecil/",
     "fork": false
   },
   {
     "name": "SIBENGKEL",
     "html_url": "https://github.com/radityobw/SIBENGKEL",
-    "description": "Sistem Informasi Bengkel Terpadu: platform web operasional bengkel, booking servis online, e-commerce suku cadang, dan portal pelanggan berbasis Laravel 13, PHP 8.3+, MySQL, Tailwind CSS v4, Alpine.js, dan Vite.",
+    "description": "Laravel 13 automotive workshop management platform with real-time service tracking, online booking, sparepart e-commerce, customer OTP portal, and Sanctum REST API.",
     "language": "Blade / Laravel",
     "stargazers_count": 0,
-    "has_pages": false,
-    "homepage": "",
+    "has_pages": true,
+    "homepage": "https://radityobw.github.io/SIBENGKEL/",
     "fork": false
   },
   {

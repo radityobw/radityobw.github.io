@@ -4,3 +4,5 @@ Allow: /
 Sitemap: https://radityobw.github.io/sitemap.xml
 Sitemap: https://radityobw.github.io/SIDIK/sitemap.xml
 Sitemap: https://radityobw.github.io/SIDIK-ML/sitemap.xml
+Sitemap: https://radityobw.github.io/langkah-kecil/sitemap.xml
+Sitemap: https://radityobw.github.io/SIBENGKEL/sitemap.xml

@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 ROOT_DIR = Path(__file__).resolve().parent
 GITHUB_USER = "radityobw"
 BASE_URL = "https://radityobw.github.io"
-GSC_TOKEN = "6y-5Cff0WkeBj7_uWju39rv0nQnqmEgw81an57VJkGg"
+GSC_SITE_VERIFICATION = "6y-5Cff0WkeBj7_uWju39rv0nQnqmEgw81an57VJkGg"
 PRIORITY_FEATURED = ("SIDIK", "SIDIK-ML", "langkah-kecil", "SIBENGKEL")
 IGNORED_REPOS = {GITHUB_USER.lower(), f"{GITHUB_USER.lower()}.github.io"}
 
@@ -24,6 +24,8 @@ PYPI_BADGES: Dict[str, str] = {
 RELEASE_BADGES: Dict[str, str] = {
     "SIDIK": "https://img.shields.io/github/v/release/radityobw/SIDIK?label=Release&color=0284c7&cacheSeconds=3600",
     "SIDIK-ML": "https://img.shields.io/github/v/release/radityobw/SIDIK-ML?label=Release&color=ea580c&cacheSeconds=3600",
+    "langkah-kecil": "https://img.shields.io/github/v/release/radityobw/langkah-kecil?label=Release&color=10b981&cacheSeconds=3600",
+    "SIBENGKEL": "https://img.shields.io/github/v/release/radityobw/SIBENGKEL?label=Release&color=ef4444&cacheSeconds=3600",
 }
 
 RYOCANTSLEEP_ECOSYSTEM: List[Dict[str, Any]] = [
@@ -191,19 +193,22 @@ def _render_card(repo: Dict[str, Any], featured: bool) -> str:
         accent_cls += " accent-red"
 
     badges_html = ""
-    if name in PYPI_BADGES:
-        pypi_pkg = name.lower()
-        rel_img = RELEASE_BADGES.get(name, "")
-        badges_html = (
-            f'\n          <div class="badges">'
-            f'<a href="https://pypi.org/project/{pypi_pkg}/"><img src="{PYPI_BADGES[name]}" alt="{esc_name} PyPI" /></a>'
-            + (f'<a href="{esc_repo_url}/releases/latest"><img src="{rel_img}" alt="{esc_name} Release" /></a>' if rel_img else "")
-            + "</div>"
-        )
+    if name in PYPI_BADGES or name in RELEASE_BADGES:
+        badge_links: List[str] = []
+        if name in PYPI_BADGES:
+            pypi_pkg = name.lower()
+            badge_links.append(
+                f'<a href="https://pypi.org/project/{pypi_pkg}/"><img src="{PYPI_BADGES[name]}" alt="{esc_name} PyPI" /></a>'
+            )
+        if name in RELEASE_BADGES:
+            badge_links.append(
+                f'<a href="{esc_repo_url}/releases/latest"><img src="{RELEASE_BADGES[name]}" alt="{esc_name} Release" /></a>'
+            )
+        badges_html = f'\n          <div class="badges">{"".join(badge_links)}</div>'
 
     actions = [f'<a class="btn primary" href="{esc_repo_url}">GitHub</a>']
     if homepage:
-        lbl = "Documentation" if name in ("SIDIK", "SIDIK-ML") else "Website"
+        lbl = "Documentation" if name in ("SIDIK", "SIDIK-ML", "langkah-kecil", "SIBENGKEL") else "Website"
         actions.insert(0, f'<a class="btn docs" href="{html.escape(homepage)}">{lbl}</a>')
     if name in ("SIDIK", "SIDIK-ML"):
         actions.append(f'<a class="btn" href="https://pypi.org/project/{name.lower()}/">PyPI</a>')
@@ -381,19 +386,23 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
   <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <meta name="google-site-verification" content="{GSC_TOKEN}" />
+  <meta name="google-site-verification" content="{GSC_SITE_VERIFICATION}" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Radityo Budi Waskito (radityobw)" />
   <meta property="og:title" content="Radityo Budi Waskito (radityobw) - Developer Portfolio &amp; RyoCantSleep" />
   <meta property="og:description" content="Cybersecurity tools (SIDIK, SIDIK-ML), RyoCantSleep multi-app ecosystem (Next.js 16, Prisma, Supabase, Redis, Docker), Godot games (Langkah Kecil), and Laravel apps." />
   <meta property="og:url" content="{BASE_URL}/" />
-  <meta property="og:image" content="{BASE_URL}/avatar.png" />
+  <meta property="og:image" content="{BASE_URL}/og-banner.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="640" />
+  <meta property="og:image:alt" content="Radityo Budi Waskito (radityobw) - Developer Portfolio &amp; Project Hub" />
 
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Radityo Budi Waskito (radityobw) - Portfolio &amp; Projects" />
   <meta name="twitter:description" content="Explore SIDIK, SIDIK-ML, RyoCantSleep multi-app platforms, Langkah Kecil, and open-source repositories by radityobw." />
-  <meta name="twitter:image" content="{BASE_URL}/avatar.png" />
+  <meta name="twitter:image" content="{BASE_URL}/og-banner.png" />
 
   <script type="application/ld+json">
   {json_ld}
@@ -604,7 +613,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
     <footer>
       <span>Radityo Budi Waskito (@{GITHUB_USER}) - Auto-synced from GitHub API ({today})</span>
-      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="/sitemap.xml">Sitemap</a></span>
+      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="{BASE_URL}/SIBENGKEL/">SIBENGKEL</a> | <a href="{BASE_URL}/langkah-kecil/">Langkah Kecil</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
 </body>
@@ -624,7 +633,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         (target / "sitemap.xml").write_text(sitemap_xml, encoding="utf-8")
         (target / "sitemap.txt").write_text(sitemap_txt, encoding="utf-8")
         if target.resolve() != ROOT_DIR.resolve():
-            for asset in (".nojekyll", "avatar.png", "favicon.ico", "favicon-48x48.png", "favicon-192x192.png", "apple-touch-icon.png"):
+            for asset in (".nojekyll", "og-banner.png", "avatar.png", "favicon.ico", "favicon-48x48.png", "favicon-192x192.png", "apple-touch-icon.png"):
                 src = ROOT_DIR / asset
                 if src.is_file():
                     shutil.copy2(src, target / asset)
