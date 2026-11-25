@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 ROOT_DIR = Path(__file__).resolve().parent
 GITHUB_USER = "radityobw"
 BASE_URL = "https://radityobw.github.io"
-GSC_SITE_VERIFICATION = "6y-5Cff0WkeBj7_uWju39rv0nQnqmEgw81an57VJkGg"
+GSC_SITE_VERIFICATION = "UHgf_iCjnYfNzB60r1-0DqWRkvjEw-RenJyeFTRBG6o"
 PRIORITY_FEATURED = ("SIDIK", "SIDIK-ML", "langkah-kecil", "SIBENGKEL")
 IGNORED_REPOS = {GITHUB_USER.lower(), f"{GITHUB_USER.lower()}.github.io"}
 
