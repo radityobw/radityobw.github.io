@@ -345,7 +345,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
                     "https://api.ryocantsleep.com",
                     "https://linkedin.com/in/radityobw",
                     "https://instagram.com/radityo_bw",
-                    "https://twitter.com/radityobw",
+                    "https://twitter.com/radityo_bw",
                     "https://www.youtube.com/@radityobw",
                     "https://pypi.org/project/sidik/",
                     "https://pypi.org/project/sidik-ml/",
@@ -402,7 +402,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
   <meta property="og:image:alt" content="Radityo Budi Waskito (radityobw) - Developer Portfolio &amp; Project Hub" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:creator" content="@radityobw" />
+  <meta name="twitter:creator" content="@radityo_bw" />
   <meta name="twitter:title" content="Radityo Budi Waskito (radityobw) - Portfolio &amp; Projects" />
   <meta name="twitter:description" content="Explore SIDIK, SIDIK-ML, RyoCantSleep multi-app platforms, Langkah Kecil, and open-source repositories by radityobw." />
   <meta name="twitter:image" content="{BASE_URL}/og-banner.png" />
@@ -587,7 +587,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         <a class="btn" href="https://ryocantsleep.com">RyoCantSleep</a>
         <a class="btn" href="https://linkedin.com/in/radityobw">LinkedIn</a>
         <a class="btn" href="https://instagram.com/radityo_bw">Instagram</a>
-        <a class="btn" href="https://twitter.com/radityobw">X</a>
+        <a class="btn" href="https://twitter.com/radityo_bw">X</a>
         <a class="btn" href="https://www.youtube.com/@radityobw">YouTube</a>
         <a class="btn" href="mailto:radityobudiw@gmail.com">Email</a>
         <a class="btn" href="https://jurnal.mediaakademik.com/index.php/jma/article/view/9068/6647">JMA Paper</a>
@@ -619,7 +619,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
     <footer>
       <span>Radityo Budi Waskito (@{GITHUB_USER}) - Auto-synced from GitHub API ({today})</span>
-      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="https://twitter.com/radityobw">X</a> | <a href="https://www.youtube.com/@radityobw">YouTube</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="{BASE_URL}/SIBENGKEL/">SIBENGKEL</a> | <a href="{BASE_URL}/langkah-kecil/">Langkah Kecil</a> | <a href="/sitemap.xml">Sitemap</a></span>
+      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="https://twitter.com/radityo_bw">X</a> | <a href="https://www.youtube.com/@radityobw">YouTube</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="{BASE_URL}/SIBENGKEL/">SIBENGKEL</a> | <a href="{BASE_URL}/langkah-kecil/">Langkah Kecil</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
 </body>
