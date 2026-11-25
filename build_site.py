@@ -26,6 +26,86 @@ RELEASE_BADGES: Dict[str, str] = {
     "SIDIK-ML": "https://img.shields.io/github/v/release/radityobw/SIDIK-ML?label=Release&color=ea580c&cacheSeconds=3600",
 }
 
+RYOCANTSLEEP_ECOSYSTEM: List[Dict[str, Any]] = [
+    {
+        "name": "ryocantsleep-mono",
+        "stack": "Next.js 16 · Turborepo",
+        "status": "Private Repo",
+        "accent": "accent-indigo",
+        "description": (
+            "9-app polymath web monorepo (Core Hub plus Hack, Math, Design, Film, Hear, Play, Read, and Speak personas) "
+            "sharing @repo/config, @repo/ui CSS-variable themes, Framer Motion, MDX, and Blender .glb 3D assets via pnpm."
+        ),
+        "links": [
+            ("Core Hub", "https://ryocantsleep.com", True),
+            ("Hack", "https://hack.ryocantsleep.com", False),
+            ("Math", "https://math.ryocantsleep.com", False),
+            ("Play", "https://play.ryocantsleep.com", False),
+            ("Speak", "https://speak.ryocantsleep.com", False),
+        ],
+    },
+    {
+        "name": "ryocantsleep-edu",
+        "stack": "Next.js 16 · Prisma · Postgres",
+        "status": "Private Repo",
+        "accent": "accent-blue",
+        "description": (
+            "Full-stack Learning Management System backed by 22 Prisma PostgreSQL models on Supabase, featuring Clerk RBAC, "
+            "IP Guard & Upstash Redis rate limiting, Lemon Squeezy checkout with Svix webhooks, shadcn/ui, and PDF/QR certificates."
+        ),
+        "links": [
+            ("Live Platform", "https://edu.ryocantsleep.com", True),
+        ],
+    },
+    {
+        "name": "ryocantsleep-api",
+        "stack": "Next.js 16 · Supabase · Redis",
+        "status": "Private Repo",
+        "accent": "accent-amber",
+        "description": (
+            "Rate-limited (50 req / 10s sliding window via Upstash Redis) 8-domain knowledge facts REST API "
+            "(/api/cysecfacts, /api/aifacts, /api/gamedevfacts, and 5 more) paired with a live Recharts latency monitor."
+        ),
+        "links": [
+            ("Live API Monitor", "https://api.ryocantsleep.com", True),
+        ],
+    },
+    {
+        "name": "ryocantsleep-labs",
+        "stack": "Laravel 12 · Docker · Nginx",
+        "status": "Private / Self-Hosted",
+        "accent": "accent-red",
+        "description": (
+            "Dockerized hybrid cyber range isolating frontend_net, backend_net, and sandbox_net behind Nginx with SQLi, IDOR, SSRF, "
+            "and RCE sandboxes, dynamic UUID flags, Grafana + Loki logs, and a 6-stage DevSecOps pipeline (Gitleaks, Trivy, OWASP ZAP, k6, Syft SBOM)."
+        ),
+        "links": [],
+    },
+]
+
+APPLIED_STACK_GROUPS: List[Dict[str, Any]] = [
+    {
+        "title": "Languages",
+        "items": ["Python", "TypeScript", "JavaScript", "PHP", "C++", "HTML5", "CSS3"],
+    },
+    {
+        "title": "Frameworks & ML",
+        "items": ["Next.js 16", "React 19", "Laravel", "Tailwind CSS", "Alpine.js", "Vite", "scikit-learn"],
+    },
+    {
+        "title": "Data & Caching",
+        "items": ["PostgreSQL", "Prisma", "Supabase", "Upstash Redis", "MySQL", "SQLite"],
+    },
+    {
+        "title": "DevSecOps & Cloud",
+        "items": ["Docker", "Nginx", "Grafana", "GitHub Actions", "Vercel", "Cloudflare", "pnpm", "Git"],
+    },
+    {
+        "title": "Game Dev & 3D",
+        "items": ["Godot v4.5", "Blender"],
+    },
+]
+
 
 def _clean_text(val: Optional[str]) -> str:
     if not val:
@@ -140,6 +220,48 @@ def _render_card(repo: Dict[str, Any], featured: bool) -> str:
     )
 
 
+def _render_ecosystem_card(item: Dict[str, Any]) -> str:
+    esc_name = html.escape(item["name"])
+    esc_stack = html.escape(item["stack"])
+    esc_status = html.escape(item["status"])
+    esc_desc = html.escape(item["description"])
+    accent_cls = html.escape(item["accent"])
+
+    actions: List[str] = []
+    for label, href, is_primary in item.get("links", []):
+        cls = "btn docs" if is_primary else "btn"
+        actions.append(f'<a class="{cls}" href="{html.escape(href)}">{html.escape(label)}</a>')
+    if not actions:
+        actions.append('<span class="status-note">Isolated Docker / CI Infrastructure</span>')
+
+    return (
+        f'        <article class="card featured-card {accent_cls}">\n'
+        f'          <div class="card-top">\n'
+        f'            <div>\n'
+        f'              <h3>{esc_name}</h3>\n'
+        f'              <span class="status-pill">{esc_status}</span>\n'
+        f'            </div>\n'
+        f'            <span class="lang-pill">{esc_stack}</span>\n'
+        f'          </div>\n'
+        f'          <p>{esc_desc}</p>\n'
+        f'          <div class="links">{"".join(actions)}</div>\n'
+        f'        </article>'
+    )
+
+
+def _render_stack_groups() -> str:
+    blocks: List[str] = []
+    for grp in APPLIED_STACK_GROUPS:
+        chips = "".join(f'<span class="chip">{html.escape(t)}</span>' for t in grp["items"])
+        blocks.append(
+            f'        <div class="stack-group">\n'
+            f'          <h3>{html.escape(grp["title"])}</h3>\n'
+            f'          <div class="chips">{chips}</div>\n'
+            f'        </div>'
+        )
+    return "\n".join(blocks)
+
+
 def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) -> None:
     repos, source = _fetch_public_repos(offline=offline)
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -200,8 +322,22 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
                     "@type": "CollegeOrUniversity",
                     "name": "Universitas Sultan Ageng Tirtayasa",
                 },
+                "knowsAbout": [
+                    "Cybersecurity",
+                    "Static Application Security Testing (SAST)",
+                    "Software Composition Analysis (SCA)",
+                    "Explainable Non-ANN Machine Learning",
+                    "Full-Stack Web Development",
+                    "Next.js & TypeScript Monorepos",
+                    "Laravel & PHP",
+                    "Docker & DevSecOps",
+                    "Godot Game Development",
+                ],
                 "sameAs": [
                     f"https://github.com/{GITHUB_USER}",
+                    "https://ryocantsleep.com",
+                    "https://edu.ryocantsleep.com",
+                    "https://api.ryocantsleep.com",
                     "https://linkedin.com/in/radityobw",
                     "https://instagram.com/radityo_bw",
                     "https://pypi.org/project/sidik/",
@@ -218,6 +354,8 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
     }, indent=2)
 
     featured_html = "\n".join(_render_card(r, featured=True) for r in featured)
+    ecosystem_html = "\n".join(_render_ecosystem_card(item) for item in RYOCANTSLEEP_ECOSYSTEM)
+    stack_html = _render_stack_groups()
     others_html = "\n".join(_render_card(r, featured=False) for r in others)
     others_section = ""
     if others:
@@ -233,8 +371,8 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radityo Budi Waskito (radityobw) - Projects, Security Tools &amp; Repositories</title>
-  <meta name="description" content="Official developer portfolio and repository directory of Radityo Budi Waskito (radityobw): SIDIK polyglot SAST & 8-ecosystem SCA, SIDIK-ML Non-ANN AI, Langkah Kecil Godot game, web apps, and programming projects." />
+  <title>Radityo Budi Waskito (radityobw) - Security Tools, RyoCantSleep &amp; Projects</title>
+  <meta name="description" content="Official developer portfolio of Radityo Budi Waskito (radityobw): SIDIK polyglot SAST & 8-ecosystem SCA, SIDIK-ML Non-ANN AI, the RyoCantSleep full-stack ecosystem (Next.js 16 monorepo, Prisma LMS, Upstash API, Docker cyber range), Langkah Kecil Godot game, and SIBENGKEL." />
   <meta name="author" content="Radityo Budi Waskito" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="{BASE_URL}/" />
@@ -247,14 +385,14 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Radityo Budi Waskito (radityobw)" />
-  <meta property="og:title" content="Radityo Budi Waskito (radityobw) - Developer Portfolio &amp; Open Source Projects" />
-  <meta property="og:description" content="Cybersecurity tools (SIDIK, SIDIK-ML), educational games (Langkah Kecil), and open-source software repositories by radityobw." />
+  <meta property="og:title" content="Radityo Budi Waskito (radityobw) - Developer Portfolio &amp; RyoCantSleep" />
+  <meta property="og:description" content="Cybersecurity tools (SIDIK, SIDIK-ML), RyoCantSleep multi-app ecosystem (Next.js 16, Prisma, Supabase, Redis, Docker), Godot games (Langkah Kecil), and Laravel apps." />
   <meta property="og:url" content="{BASE_URL}/" />
   <meta property="og:image" content="{BASE_URL}/avatar.png" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Radityo Budi Waskito (radityobw) - Open Source Projects" />
-  <meta name="twitter:description" content="Explore SIDIK, SIDIK-ML, Langkah Kecil, and all public repositories by radityobw." />
+  <meta name="twitter:title" content="Radityo Budi Waskito (radityobw) - Portfolio &amp; Projects" />
+  <meta name="twitter:description" content="Explore SIDIK, SIDIK-ML, RyoCantSleep multi-app platforms, Langkah Kecil, and open-source repositories by radityobw." />
   <meta name="twitter:image" content="{BASE_URL}/avatar.png" />
 
   <script type="application/ld+json">
@@ -269,6 +407,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       --text: #e2e8f0;
       --muted: #94a3b8;
       --blue: #0ea5e9;
+      --indigo: #6366f1;
       --amber: #f59e0b;
       --green: #10b981;
       --red: #ef4444;
@@ -303,7 +442,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       border-radius: 20px;
     }}
     h1 {{ margin: 0 0 6px; font-size: clamp(24px, 3.6vw, 34px); color: #f8fafc; }}
-    .sub {{ margin: 0; color: #cbd5e1; max-width: 640px; font-size: 15.5px; }}
+    .sub {{ margin: 0; color: #cbd5e1; max-width: 660px; font-size: 15.5px; }}
     .hero-actions {{ display: flex; flex-wrap: wrap; gap: 10px; }}
     section {{ margin-top: 38px; }}
     h2 {{
@@ -313,6 +452,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       border-left: 4px solid var(--blue);
       padding-left: 12px;
     }}
+    .section-note {{ margin: -6px 0 16px; color: var(--muted); font-size: 14px; }}
     .grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -328,6 +468,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       gap: 12px;
     }}
     .accent-blue {{ border-top: 4px solid var(--blue); }}
+    .accent-indigo {{ border-top: 4px solid var(--indigo); }}
     .accent-amber {{ border-top: 4px solid var(--amber); }}
     .accent-green {{ border-top: 4px solid var(--green); }}
     .accent-red {{ border-top: 4px solid var(--red); }}
@@ -343,9 +484,25 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       border: 1px solid #293548;
       color: #bae6fd;
     }}
+    .status-pill {{
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+    }}
+    .status-note {{
+      font-size: 12.5px;
+      color: var(--muted);
+      font-style: italic;
+    }}
     .card p {{ margin: 0; color: var(--muted); font-size: 14px; flex-grow: 1; }}
     .badges {{ display: flex; flex-wrap: wrap; gap: 8px; }}
-    .links {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    .links {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
     .btn {{
       display: inline-block;
       padding: 7px 13px;
@@ -362,6 +519,32 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       color: #ffffff;
     }}
     .btn:hover {{ text-decoration: none; filter: brightness(1.08); }}
+    .stack-grid {{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }}
+    .stack-group {{
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }}
+    .stack-group h3 {{
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #bae6fd;
+      letter-spacing: 0.02em;
+    }}
+    .chips {{ display: flex; flex-wrap: wrap; gap: 7px; }}
+    .chip {{
+      font-size: 12px;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: #0f172a;
+      border: 1px solid #263248;
+      color: #e2e8f0;
+    }}
     footer {{
       margin-top: 48px;
       padding-top: 18px;
@@ -383,12 +566,13 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         <div>
           <h1>Radityo Budi Waskito (<code>@{GITHUB_USER}</code>)</h1>
           <p class="sub">
-            Informatics student at Universitas Sultan Ageng Tirtayasa (UNTIRTA) building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), educational Godot software (<strong>Langkah Kecil</strong>), Laravel web platforms (<strong>SIBENGKEL</strong>), and open-source utilities.
+            Informatics student at Universitas Sultan Ageng Tirtayasa (UNTIRTA) building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), the <strong>RyoCantSleep</strong> full-stack ecosystem (Next.js 16 monorepo, Prisma LMS, Upstash Redis API, and Dockerized cyber range), educational Godot software (<strong>Langkah Kecil</strong>), and Laravel platforms (<strong>SIBENGKEL</strong>).
           </p>
         </div>
       </div>
       <div class="hero-actions">
         <a class="btn docs" href="https://github.com/{GITHUB_USER}">GitHub</a>
+        <a class="btn" href="https://ryocantsleep.com">RyoCantSleep</a>
         <a class="btn" href="https://linkedin.com/in/radityobw">LinkedIn</a>
         <a class="btn" href="mailto:radityobudiw@gmail.com">Email</a>
         <a class="btn" href="https://jurnal.mediaakademik.com/index.php/jma/article/view/9068/6647">JMA Paper</a>
@@ -401,11 +585,26 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 {featured_html}
       </div>
     </section>
+
+    <section>
+      <h2>RyoCantSleep Ecosystem (Multi-App Full-Stack &amp; Cyber Range)</h2>
+      <p class="section-note">Private R&amp;D repositories powering production educational platforms, APIs, and isolated security training infrastructure.</p>
+      <div class="grid">
+{ecosystem_html}
+      </div>
+    </section>
 {others_section}
+
+    <section>
+      <h2>Applied Tech Stack</h2>
+      <div class="stack-grid">
+{stack_html}
+      </div>
+    </section>
 
     <footer>
       <span>Radityo Budi Waskito (@{GITHUB_USER}) - Auto-synced from GitHub API ({today})</span>
-      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="/sitemap.xml">Sitemap</a></span>
+      <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
 </body>

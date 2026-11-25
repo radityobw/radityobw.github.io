@@ -32,7 +32,7 @@
   {
     "name": "SIBENGKEL",
     "html_url": "https://github.com/radityobw/SIBENGKEL",
-    "description": "Sistem Informasi Bengkel Terpadu: platform web operasional bengkel, booking servis online, e-commerce suku cadang, dan portal pelanggan berbasis Laravel 12, PHP 8.2+, MySQL, dan Tailwind CSS.",
+    "description": "Sistem Informasi Bengkel Terpadu: platform web operasional bengkel, booking servis online, e-commerce suku cadang, dan portal pelanggan berbasis Laravel 13, PHP 8.3+, MySQL, Tailwind CSS v4, Alpine.js, dan Vite.",
     "language": "Blade / Laravel",
     "stargazers_count": 0,
     "has_pages": false,
