@@ -1,0 +1,112 @@
+[
+  {
+    "name": "SIDIK",
+    "html_url": "https://github.com/radityobw/SIDIK",
+    "description": "Offline polyglot SAST & 8-ecosystem OSV SCA security scanner (30+ languages, 19 manifests: PyPI, npm, Go, Rust, Java, PHP, Ruby, .NET) with CLI, TUI, GUI, SARIF",
+    "language": "Python",
+    "stargazers_count": 0,
+    "has_pages": true,
+    "homepage": "https://radityobw.github.io/SIDIK/",
+    "fork": false
+  },
+  {
+    "name": "SIDIK-ML",
+    "html_url": "https://github.com/radityobw/SIDIK-ML",
+    "description": "Explainable Non-ANN ML extension for SIDIK polyglot SAST & 8-ecosystem SCA: 5 bundled SHA-256 models for offline secret false-positive reduction.",
+    "language": "Python / Jupyter Notebook",
+    "stargazers_count": 0,
+    "has_pages": true,
+    "homepage": "https://radityobw.github.io/SIDIK-ML/",
+    "fork": false
+  },
+  {
+    "name": "langkah-kecil",
+    "html_url": "https://github.com/radityobw/langkah-kecil",
+    "description": "Langkah Kecil adalah aplikasi permainan edukasi untuk anak-anak berkebutuhan khusus yang dibuat menggunakan game engine godot v4.5 dengan fitur feedback pengenalan emosi dan juga jadwal harian anak.",
+    "language": "GDScript",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "SIBENGKEL",
+    "html_url": "https://github.com/radityobw/SIBENGKEL",
+    "description": "Web application repository built with Laravel Blade.",
+    "language": "Blade",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "profil-app",
+    "html_url": "https://github.com/radityobw/profil-app",
+    "description": "Laravel Blade profile application project.",
+    "language": "Blade",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama",
+    "html_url": "https://github.com/radityobw/uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama",
+    "description": "Tugas Kelompok B3 - Probabilitas dan Statistika",
+    "language": null,
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "CppProject",
+    "html_url": "https://github.com/radityobw/CppProject",
+    "description": "Kumpulan Project C++",
+    "language": "C++ / SWIG",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "PythonProject",
+    "html_url": "https://github.com/radityobw/PythonProject",
+    "description": "Kumpulan Project Python.",
+    "language": "Python",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "bio-3337250058",
+    "html_url": "https://github.com/radityobw/bio-3337250058",
+    "description": "HTML & CSS web bio exercise.",
+    "language": "CSS",
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "bio-3337250057",
+    "html_url": "https://github.com/radityobw/bio-3337250057",
+    "description": "Web bio repository.",
+    "language": null,
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  },
+  {
+    "name": "git-starter",
+    "html_url": "https://github.com/radityobw/git-starter",
+    "description": "Sebuah perjalanan pertama saya menjelajahi git dan github",
+    "language": null,
+    "stargazers_count": 0,
+    "has_pages": false,
+    "homepage": "",
+    "fork": false
+  }
+]
