@@ -10,10 +10,10 @@ const KEYFRAMES = [
 ];
 
 const CHAPTER_LABELS = {
-  profile: '01 / PROFILE',
-  opensource: '02 / OPEN-SOURCE',
-  ryocantsleep: '03 / RYOCANTSLEEP',
-  stack: '04 / STACK & INDEX',
+  profile: '01 Profile',
+  opensource: '02 Open Source',
+  ryocantsleep: '03 RyoCantSleep',
+  stack: '04 Tech Stack',
 };
 
 function clamp(v, lo, hi) {
@@ -67,30 +67,30 @@ function initShowcase() {
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 1.08;
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environment = envTex;
-  scene.environmentIntensity = 0.85;
+  scene.environmentIntensity = 0.72;
 
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
   camera.position.set(0, 0.04, 4.15);
 
-  const keyLight = new THREE.DirectionalLight(0xfff5ec, 2.3);
+  const keyLight = new THREE.DirectionalLight(0xfff9f4, 2.1);
   keyLight.position.set(3.4, 4.2, 5.2);
   scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0xdbeafe, 1.05);
+  const fillLight = new THREE.DirectionalLight(0xeef4ff, 1.0);
   fillLight.position.set(-4.0, 1.5, 2.5);
   scene.add(fillLight);
 
-  const crimsonRim = new THREE.SpotLight(0xe11d48, 11.0, 16, Math.PI / 3.2, 0.55, 1.2);
+  const crimsonRim = new THREE.SpotLight(0xd70015, 7.0, 16, Math.PI / 3.2, 0.55, 1.2);
   crimsonRim.position.set(-2.6, 2.0, -3.2);
   scene.add(crimsonRim);
 
-  const topHairLight = new THREE.DirectionalLight(0x38bdf8, 1.35);
+  const topHairLight = new THREE.DirectionalLight(0x0071e3, 0.75);
   topHairLight.position.set(2.2, 3.8, -2.5);
   scene.add(topHairLight);
 

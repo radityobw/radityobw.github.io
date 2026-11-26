@@ -409,7 +409,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <script type="importmap">
   {{
@@ -426,36 +426,33 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
   <style>
     :root {{
-      --bg: #0b0d10;
-      --surface: #12151b;
-      --surface-2: #171b23;
-      --border: #222731;
-      --border-strong: #323a49;
-      --text: #f2f4f7;
-      --muted: #8b94a3;
-      --crimson: #e11d48;
-      --blue: #38bdf8;
-      --indigo: #818cf8;
-      --amber: #f59e0b;
-      --green: #10b981;
-      --red: #ef4444;
-      --mono: "JetBrains Mono", Consolas, monospace;
-      --display: "Space Grotesk", -apple-system, sans-serif;
-      --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --bg: #ffffff;
+      --surface: #f5f5f7;
+      --surface-2: #ffffff;
+      --hairline: rgba(0, 0, 0, 0.08);
+      --hairline-strong: rgba(0, 0, 0, 0.16);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --crimson: #d70015;
+      --blue: #0071e3;
+      --indigo: #5e5ce6;
+      --amber: #c97a00;
+      --green: #1d8348;
+      --red: #d70015;
+      --mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace;
+      --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
+      --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
     }}
     * {{ box-sizing: border-box; }}
     html {{ scroll-behavior: smooth; }}
     body {{
       margin: 0;
       font-family: var(--sans);
-      background-color: var(--bg);
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.58;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }}
     a {{ color: var(--blue); text-decoration: none; }}
     a:hover {{ text-decoration: underline; }}
@@ -466,14 +463,14 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       left: 0;
       right: 0;
       height: 2px;
-      background: rgba(255, 255, 255, 0.06);
+      background: transparent;
       z-index: 60;
       pointer-events: none;
     }}
     #scroll-progress-bar {{
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, var(--crimson) 0%, var(--blue) 100%);
+      background: var(--blue);
       transform-origin: left center;
       transform: scaleX(0);
     }}
@@ -482,43 +479,49 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(11, 13, 16, 0.9);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
+      height: 52px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--hairline);
     }}
     .topbar-inner {{
-      max-width: 1240px;
+      max-width: 1180px;
+      height: 100%;
       margin: 0 auto;
-      padding: 12px 24px;
+      padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      font-family: var(--mono);
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
     }}
     .brand-mark {{
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       color: var(--text);
       font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 14px;
+      letter-spacing: -0.01em;
     }}
+    .brand-mark:hover {{ text-decoration: none; }}
     .brand-dot {{
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
       background: var(--crimson);
       display: inline-block;
     }}
     .topbar-nav {{
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 24px;
     }}
     .topbar-nav a {{
       color: var(--muted);
+      font-weight: 500;
       transition: color 0.15s ease;
     }}
     .topbar-nav a:hover {{
@@ -527,19 +530,19 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
     }}
 
     .wrap {{
-      max-width: 1240px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 36px 24px 72px;
+      padding: 56px 28px 84px;
     }}
     .monograph-grid {{
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(350px, 0.85fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: 56px;
       align-items: start;
     }}
     .vitrine-col {{
       position: sticky;
-      top: 74px;
+      top: 84px;
       order: 2;
     }}
     .chapters-col {{
@@ -549,55 +552,48 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
     #stage-3d {{
       position: relative;
-      height: min(540px, calc(100vh - 110px));
-      min-height: 400px;
-      background:
-        radial-gradient(circle at 50% 45%, #232c3b 0%, #131720 68%, #0c0e12 100%);
-      border: 1px solid var(--border);
+      height: min(560px, calc(100vh - 120px));
+      min-height: 420px;
+      background: radial-gradient(circle at 50% 42%, #ffffff 0%, #f1f1f4 72%, #e8e8ed 100%);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
       overflow: hidden;
       cursor: grab;
       user-select: none;
       touch-action: pan-y;
     }}
     #stage-3d:active {{ cursor: grabbing; }}
-    .stage-tick {{
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      pointer-events: none;
-      z-index: 4;
-    }}
-    .stage-tick.tl {{ top: 10px; left: 10px; border-top: 1px solid var(--crimson); border-left: 1px solid var(--crimson); }}
-    .stage-tick.tr {{ top: 10px; right: 10px; border-top: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); }}
-    .stage-tick.bl {{ bottom: 10px; left: 10px; border-bottom: 1px solid var(--border-strong); border-left: 1px solid var(--border-strong); }}
-    .stage-tick.br {{ bottom: 10px; right: 10px; border-bottom: 1px solid var(--crimson); border-right: 1px solid var(--crimson); }}
 
     .stage-hud-top {{
       position: absolute;
-      top: 16px;
-      left: 20px;
-      right: 20px;
+      top: 20px;
+      left: 22px;
+      right: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
       pointer-events: none;
       z-index: 4;
     }}
     #stage-chapter {{
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(12px);
       color: var(--text);
-      border-left: 2px solid var(--crimson);
-      padding-left: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 4px 12px;
+      border-radius: 980px;
       font-weight: 600;
+      letter-spacing: -0.005em;
     }}
     .stage-hud-bottom {{
       position: absolute;
-      bottom: 14px;
-      left: 20px;
-      right: 20px;
+      bottom: 18px;
+      left: 22px;
+      right: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -616,9 +612,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       opacity: 0;
       transition: opacity 0.45s ease;
     }}
-    #stage-3d.is-ready #canvas-3d {{
-      opacity: 1;
-    }}
+    #stage-3d.is-ready #canvas-3d {{ opacity: 1; }}
     .stage-fallback {{
       position: absolute;
       inset: 0;
@@ -630,16 +624,13 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       border-radius: 24px;
       padding: 12px;
       z-index: 1;
-      transition: opacity 0.45s ease;
     }}
-    #stage-3d.is-ready .stage-fallback {{
-      display: none;
-    }}
+    #stage-3d.is-ready .stage-fallback {{ display: none; }}
 
     .chapter {{
-      padding-bottom: 52px;
-      margin-bottom: 52px;
-      border-bottom: 1px solid var(--border);
+      padding-bottom: 64px;
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--hairline);
     }}
     .chapter:last-child {{
       border-bottom: none;
@@ -647,61 +638,66 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       padding-bottom: 16px;
     }}
     .chapter-tag {{
-      font-family: var(--mono);
-      font-size: 11.5px;
-      letter-spacing: 0.1em;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--crimson);
+      color: var(--muted);
       margin-bottom: 12px;
       display: block;
     }}
     h1 {{
       font-family: var(--display);
-      margin: 0 0 14px;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.08;
-      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.4vw, 52px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.035em;
       color: var(--text);
     }}
     .handle {{
-      font-family: var(--mono);
-      font-size: 15px;
+      font-family: var(--sans);
+      font-size: 17px;
       font-weight: 500;
-      color: var(--blue);
-      display: inline-block;
-      margin-top: 6px;
+      letter-spacing: -0.01em;
+      color: var(--muted);
+      display: block;
+      margin-top: 8px;
     }}
     .sub {{
-      margin: 0 0 24px;
-      color: #b7c0ce;
-      font-size: 15.5px;
-      max-width: 660px;
+      margin: 0 0 28px;
+      color: #424245;
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 620px;
     }}
     .metrics-strip {{
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      border: 1px solid var(--border);
+      border-radius: 20px;
       background: var(--surface);
-      margin-bottom: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      margin-bottom: 28px;
+      overflow: hidden;
     }}
     .metric-cell {{
-      padding: 14px 16px;
-      border-right: 1px solid var(--border);
+      padding: 16px 18px;
+      border-right: 1px solid var(--hairline);
+      font-variant-numeric: tabular-nums;
     }}
     .metric-cell:last-child {{ border-right: none; }}
     .metric-val {{
       font-family: var(--display);
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 700;
+      letter-spacing: -0.025em;
       color: var(--text);
       display: block;
     }}
     .metric-lbl {{
-      font-family: var(--mono);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-weight: 500;
     }}
     .hero-actions {{
       display: flex;
@@ -710,128 +706,136 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
     }}
     h2 {{
       font-family: var(--display);
-      font-size: 22px;
-      letter-spacing: -0.01em;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
       color: var(--text);
       margin: 0 0 10px;
     }}
     .section-note {{
-      margin: 0 0 20px;
+      margin: 0 0 24px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 15px;
     }}
     .grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 16px;
     }}
     .card {{
       background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 24px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      transition: border-color 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }}
-    .card:hover {{ border-color: var(--border-strong); }}
-    .accent-blue {{ border-top: 2px solid var(--blue); }}
-    .accent-indigo {{ border-top: 2px solid var(--indigo); }}
-    .accent-amber {{ border-top: 2px solid var(--amber); }}
-    .accent-green {{ border-top: 2px solid var(--green); }}
-    .accent-red {{ border-top: 2px solid var(--red); }}
+    .card:hover {{
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+    }}
+    .accent-blue {{ border-left: 3px solid var(--blue); }}
+    .accent-indigo {{ border-left: 3px solid var(--indigo); }}
+    .accent-amber {{ border-left: 3px solid var(--amber); }}
+    .accent-green {{ border-left: 3px solid var(--green); }}
+    .accent-red {{ border-left: 3px solid var(--crimson); }}
     .card-top {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }}
     .card-top h3 {{
       font-family: var(--display);
       margin: 0;
-      font-size: 17px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
       color: var(--text);
       word-break: break-word;
     }}
     .lang-pill {{
       flex-shrink: 0;
-      font-family: var(--mono);
       font-size: 11px;
-      font-weight: 500;
-      padding: 3px 8px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: #cbd5e1;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 980px;
+      background: #ffffff;
+      border: 1px solid var(--hairline);
+      color: var(--muted);
     }}
     .status-pill {{
       display: inline-block;
-      margin-top: 5px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      padding: 2px 7px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 9px;
+      border-radius: 980px;
+      background: rgba(0, 0, 0, 0.04);
       color: var(--muted);
     }}
     .status-note {{
-      font-family: var(--mono);
       font-size: 12px;
       color: var(--muted);
     }}
-    .card p {{ margin: 0; color: var(--muted); font-size: 13.8px; flex-grow: 1; }}
-    .badges {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    .card p {{ margin: 0; color: #424245; font-size: 14px; line-height: 1.55; flex-grow: 1; }}
+    .badges {{ display: flex; flex-wrap: wrap; gap: 6px; }}
     .links {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
     .btn {{
-      display: inline-block;
-      padding: 7px 13px;
-      font-size: 12.5px;
-      font-weight: 600;
-      background: var(--surface-2);
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 980px;
+      font-size: 13px;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.045);
       color: var(--text);
-      border: 1px solid var(--border-strong);
-      transition: border-color 0.15s ease, background 0.15s ease;
+      border: 1px solid transparent;
+      transition: background 0.15s ease, transform 0.15s ease;
     }}
     .btn.docs {{
-      background: var(--crimson);
-      border-color: var(--crimson);
+      background: var(--blue);
       color: #ffffff;
+      font-weight: 600;
     }}
     .btn:hover {{
       text-decoration: none;
-      border-color: var(--text);
+      background: rgba(0, 0, 0, 0.09);
     }}
     .btn.docs:hover {{
-      background: #be123c;
-      border-color: #be123c;
+      background: #0077ed;
     }}
     .stack-grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+      gap: 14px;
     }}
     .stack-group {{
       background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      padding: 18px;
     }}
     .stack-group h3 {{
-      font-family: var(--mono);
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       font-size: 12px;
+      font-weight: 600;
       text-transform: uppercase;
-      color: var(--blue);
-      letter-spacing: 0.06em;
+      color: var(--muted);
+      letter-spacing: 0.04em;
     }}
     .chips {{ display: flex; flex-wrap: wrap; gap: 6px; }}
     .chip {{
-      font-family: var(--mono);
-      font-size: 11.5px;
-      padding: 3px 8px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: #d6dde7;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 980px;
+      background: #ffffff;
+      border: 1px solid var(--hairline);
+      color: var(--text);
     }}
     footer {{
       margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--hairline);
+      font-size: 12.5px;
       color: var(--muted);
       display: flex;
       justify-content: space-between;
@@ -839,12 +843,12 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       gap: 10px;
     }}
     @media (max-width: 960px) {{
-      .monograph-grid {{ grid-template-columns: 1fr; gap: 28px; }}
+      .monograph-grid {{ grid-template-columns: 1fr; gap: 32px; }}
       .vitrine-col {{ position: relative; top: 0; order: 1; }}
       .chapters-col {{ order: 2; }}
-      #stage-3d {{ height: 340px; min-height: 300px; }}
+      #stage-3d {{ height: 360px; min-height: 300px; }}
       .metrics-strip {{ grid-template-columns: 1fr; }}
-      .metric-cell {{ border-right: none; border-bottom: 1px solid var(--border); }}
+      .metric-cell {{ border-right: none; border-bottom: 1px solid var(--hairline); }}
       .metric-cell:last-child {{ border-bottom: none; }}
     }}
   </style>
@@ -854,7 +858,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
   <nav class="topbar" aria-label="Primary navigation">
     <div class="topbar-inner">
-      <a class="brand-mark" href="{BASE_URL}/"><span class="brand-dot"></span>RADITYOBW / MONOGRAPH</a>
+      <a class="brand-mark" href="{BASE_URL}/"><span class="brand-dot"></span>radityobw</a>
       <div class="topbar-nav">
         <a href="#sec-projects">Projects</a>
         <a href="#sec-ecosystem">RyoCantSleep</a>
@@ -868,7 +872,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
     <div class="monograph-grid">
       <main class="chapters-col">
         <section class="chapter" data-chapter="profile" id="sec-profile">
-          <span class="chapter-tag">01 / ENGINEERING PROFILE</span>
+          <span class="chapter-tag">Engineering Portfolio</span>
           <h1>Radityo Budi Waskito <span class="handle">@{GITHUB_USER}</span></h1>
           <p class="sub">
             Informatics student at Universitas Sultan Ageng Tirtayasa (UNTIRTA) building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), the <strong>RyoCantSleep</strong> full-stack ecosystem (Next.js 16 monorepo, Prisma LMS, Upstash Redis API, and Dockerized cyber range), educational Godot software (<strong>Langkah Kecil</strong>), and Laravel platforms (<strong>SIBENGKEL</strong>).
@@ -900,7 +904,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         </section>
 
         <section class="chapter" data-chapter="opensource" id="sec-projects">
-          <span class="chapter-tag">02 / OPEN-SOURCE CATALOG</span>
+          <span class="chapter-tag">Open Source</span>
           <h2>Pinned &amp; Featured Public Projects ({len(featured)})</h2>
           <p class="section-note">Flagship repositories synchronized via GitHub API with automated release packaging and static documentation sites.</p>
           <div class="grid">
@@ -909,8 +913,8 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         </section>
 
         <section class="chapter" data-chapter="ryocantsleep" id="sec-ecosystem">
-          <span class="chapter-tag">03 / PRIVATE INFRASTRUCTURE</span>
-          <h2>RyoCantSleep Ecosystem (Multi-App Full-Stack &amp; Cyber Range)</h2>
+          <span class="chapter-tag">Private Infrastructure</span>
+          <h2>RyoCantSleep Ecosystem</h2>
           <p class="section-note">Private R&amp;D repositories powering production educational platforms, APIs, and isolated security training infrastructure.</p>
           <div class="grid">
 {ecosystem_html}
@@ -918,7 +922,7 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
         </section>
 
         <section class="chapter" data-chapter="stack" id="sec-stack">
-          <span class="chapter-tag">04 / CAPABILITY MATRIX</span>
+          <span class="chapter-tag">Capabilities</span>
           <h2>Applied Tech Stack</h2>
           <p class="section-note">Languages, frameworks, data stores, and infrastructure verified across production deployments.</p>
           <div class="stack-grid">
@@ -930,26 +934,22 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
 
       <aside class="vitrine-col" aria-label="Interactive 3D Mascot Stage">
         <div id="stage-3d">
-          <span class="stage-tick tl"></span>
-          <span class="stage-tick tr"></span>
-          <span class="stage-tick bl"></span>
-          <span class="stage-tick br"></span>
           <div class="stage-hud-top">
-            <span id="stage-chapter">01 / PROFILE</span>
-            <span>DRAG TO ORBIT</span>
+            <span id="stage-chapter">01 Profile</span>
+            <span>Drag to orbit</span>
           </div>
           <img class="stage-fallback" src="/avatar.png" alt="Radityo Budi Waskito (@{GITHUB_USER})" width="148" height="148" />
           <canvas id="canvas-3d" aria-label="Interactive 3D RadityoBW Mascot"></canvas>
           <div class="stage-hud-bottom">
             <span>radityobw.glb</span>
-            <span>SCROLL CHOREOGRAPHY</span>
+            <span>Scroll choreography</span>
           </div>
         </div>
       </aside>
     </div>
 
     <footer>
-      <span>Radityo Budi Waskito (@{GITHUB_USER}) - Auto-synced from GitHub API ({today})</span>
+      <span>Radityo Budi Waskito (@{GITHUB_USER}) · Auto-synced from GitHub API ({today})</span>
       <span><a href="https://github.com/{GITHUB_USER}">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="https://twitter.com/radityo_bw">X</a> | <a href="https://www.youtube.com/@radityobw">YouTube</a> | <a href="{BASE_URL}/SIDIK/">SIDIK</a> | <a href="{BASE_URL}/SIDIK-ML/">SIDIK-ML</a> | <a href="{BASE_URL}/SIBENGKEL/">SIBENGKEL</a> | <a href="{BASE_URL}/langkah-kecil/">Langkah Kecil</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
