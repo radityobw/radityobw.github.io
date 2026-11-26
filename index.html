@@ -32,6 +32,19 @@
   <meta name="twitter:description" content="Explore SIDIK, SIDIK-ML, RyoCantSleep multi-app platforms, Langkah Kecil, and open-source repositories by radityobw." />
   <meta name="twitter:image" content="https://radityobw.github.io/og-banner.png" />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
@@ -122,190 +135,484 @@
 
   <style>
     :root {
-      --bg: #0b1120;
-      --bg-card: #111827;
-      --border: #1e293b;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --blue: #0ea5e9;
-      --indigo: #6366f1;
+      --bg: #0b0d10;
+      --surface: #12151b;
+      --surface-2: #171b23;
+      --border: #222731;
+      --border-strong: #323a49;
+      --text: #f2f4f7;
+      --muted: #8b94a3;
+      --crimson: #e11d48;
+      --blue: #38bdf8;
+      --indigo: #818cf8;
       --amber: #f59e0b;
       --green: #10b981;
       --red: #ef4444;
+      --mono: "JetBrains Mono", Consolas, monospace;
+      --display: "Space Grotesk", -apple-system, sans-serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-      background: radial-gradient(circle at top right, #102a43 0%, var(--bg) 52%);
+      font-family: var(--sans);
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
       color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: #38bdf8; text-decoration: none; }
+    a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 20px 64px; }
-    .hero {
-      background: linear-gradient(145deg, #0f172a 0%, #111c33 100%);
-      border: 1px solid #1e3a5f;
-      border-radius: 18px;
-      padding: 32px;
+
+    .progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      z-index: 60;
+      pointer-events: none;
+    }
+    #scroll-progress-bar {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--crimson) 0%, var(--blue) 100%);
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(11, 13, 16, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 12px 24px;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.5);
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
     }
-    .hero-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-    .hero-left img {
-      width: 84px;
-      height: 84px;
-      border-radius: 20px;
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.04em;
     }
-    h1 { margin: 0 0 6px; font-size: clamp(24px, 3.6vw, 34px); color: #f8fafc; }
-    .sub { margin: 0; color: #cbd5e1; max-width: 660px; font-size: 15.5px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-    section { margin-top: 38px; }
-    h2 {
-      font-size: 21px;
-      color: #f8fafc;
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--crimson);
+      display: inline-block;
+    }
+    .topbar-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+    .topbar-nav a {
+      color: var(--muted);
+      transition: color 0.15s ease;
+    }
+    .topbar-nav a:hover {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+    }
+    .monograph-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(350px, 0.85fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .vitrine-col {
+      position: sticky;
+      top: 74px;
+      order: 2;
+    }
+    .chapters-col {
+      order: 1;
+      min-width: 0;
+    }
+
+    #stage-3d {
+      position: relative;
+      height: min(540px, calc(100vh - 110px));
+      min-height: 400px;
+      background:
+        radial-gradient(circle at 50% 45%, #232c3b 0%, #131720 68%, #0c0e12 100%);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    #stage-3d:active { cursor: grabbing; }
+    .stage-tick {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .stage-tick.tl { top: 10px; left: 10px; border-top: 1px solid var(--crimson); border-left: 1px solid var(--crimson); }
+    .stage-tick.tr { top: 10px; right: 10px; border-top: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); }
+    .stage-tick.bl { bottom: 10px; left: 10px; border-bottom: 1px solid var(--border-strong); border-left: 1px solid var(--border-strong); }
+    .stage-tick.br { bottom: 10px; right: 10px; border-bottom: 1px solid var(--crimson); border-right: 1px solid var(--crimson); }
+
+    .stage-hud-top {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      pointer-events: none;
+      z-index: 4;
+    }
+    #stage-chapter {
+      color: var(--text);
+      border-left: 2px solid var(--crimson);
+      padding-left: 8px;
+      font-weight: 600;
+    }
+    .stage-hud-bottom {
+      position: absolute;
+      bottom: 14px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      pointer-events: none;
+      z-index: 4;
+    }
+    #canvas-3d {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    #stage-3d.is-ready #canvas-3d {
+      opacity: 1;
+    }
+    .stage-fallback {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 148px;
+      height: 148px;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 12px;
+      z-index: 1;
+      transition: opacity 0.45s ease;
+    }
+    #stage-3d.is-ready .stage-fallback {
+      display: none;
+    }
+
+    .chapter {
+      padding-bottom: 52px;
+      margin-bottom: 52px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chapter:last-child {
+      border-bottom: none;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+    }
+    .chapter-tag {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 12px;
+      display: block;
+    }
+    h1 {
+      font-family: var(--display);
       margin: 0 0 14px;
-      border-left: 4px solid var(--blue);
-      padding-left: 12px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text);
     }
-    .section-note { margin: -6px 0 16px; color: var(--muted); font-size: 14px; }
+    .handle {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--blue);
+      display: inline-block;
+      margin-top: 6px;
+    }
+    .sub {
+      margin: 0 0 24px;
+      color: #b7c0ce;
+      font-size: 15.5px;
+      max-width: 660px;
+    }
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 24px;
+    }
+    .metric-cell {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+    }
+    .metric-cell:last-child { border-right: none; }
+    .metric-val {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+    }
+    .metric-lbl {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    h2 {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0 0 10px;
+    }
+    .section-note {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 14px;
     }
     .card {
-      background: var(--bg-card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 14px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      transition: border-color 0.2s ease;
     }
-    .accent-blue { border-top: 4px solid var(--blue); }
-    .accent-indigo { border-top: 4px solid var(--indigo); }
-    .accent-amber { border-top: 4px solid var(--amber); }
-    .accent-green { border-top: 4px solid var(--green); }
-    .accent-red { border-top: 4px solid var(--red); }
+    .card:hover { border-color: var(--border-strong); }
+    .accent-blue { border-top: 2px solid var(--blue); }
+    .accent-indigo { border-top: 2px solid var(--indigo); }
+    .accent-amber { border-top: 2px solid var(--amber); }
+    .accent-green { border-top: 2px solid var(--green); }
+    .accent-red { border-top: 2px solid var(--red); }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-    .card-top h3 { margin: 0; font-size: 17.5px; color: #f8fafc; word-break: break-word; }
+    .card-top h3 {
+      font-family: var(--display);
+      margin: 0;
+      font-size: 17px;
+      color: var(--text);
+      word-break: break-word;
+    }
     .lang-pill {
       flex-shrink: 0;
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: #172033;
-      border: 1px solid #293548;
-      color: #bae6fd;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
     }
     .status-pill {
       display: inline-block;
       margin-top: 5px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 6px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 2px 7px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
     }
     .status-note {
-      font-size: 12.5px;
+      font-family: var(--mono);
+      font-size: 12px;
       color: var(--muted);
-      font-style: italic;
     }
-    .card p { margin: 0; color: var(--muted); font-size: 14px; flex-grow: 1; }
+    .card p { margin: 0; color: var(--muted); font-size: 13.8px; flex-grow: 1; }
     .badges { display: flex; flex-wrap: wrap; gap: 8px; }
     .links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
     .btn {
       display: inline-block;
       padding: 7px 13px;
-      border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
-      background: #1e293b;
-      color: #f8fafc;
-      border: 1px solid #334155;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      transition: border-color 0.15s ease, background 0.15s ease;
     }
     .btn.docs {
-      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-      border-color: #38bdf8;
+      background: var(--crimson);
+      border-color: var(--crimson);
       color: #ffffff;
     }
-    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .btn:hover {
+      text-decoration: none;
+      border-color: var(--text);
+    }
+    .btn.docs:hover {
+      background: #be123c;
+      border-color: #be123c;
+    }
     .stack-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
     .stack-group {
-      background: var(--bg-card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
       padding: 16px;
     }
     .stack-group h3 {
+      font-family: var(--mono);
       margin: 0 0 10px;
-      font-size: 14px;
-      color: #bae6fd;
-      letter-spacing: 0.02em;
-    }
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .chip {
       font-size: 12px;
-      padding: 3px 9px;
-      border-radius: 7px;
-      background: #0f172a;
-      border: 1px solid #263248;
-      color: #e2e8f0;
+      text-transform: uppercase;
+      color: var(--blue);
+      letter-spacing: 0.06em;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      padding: 3px 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: #d6dde7;
     }
     footer {
-      margin-top: 48px;
-      padding-top: 18px;
+      margin-top: 40px;
+      padding-top: 20px;
       border-top: 1px solid var(--border);
-      font-size: 13px;
+      font-family: var(--mono);
+      font-size: 12px;
       color: var(--muted);
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 10px;
     }
+    @media (max-width: 960px) {
+      .monograph-grid { grid-template-columns: 1fr; gap: 28px; }
+      .vitrine-col { position: relative; top: 0; order: 1; }
+      .chapters-col { order: 2; }
+      #stage-3d { height: 340px; min-height: 300px; }
+      .metrics-strip { grid-template-columns: 1fr; }
+      .metric-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .metric-cell:last-child { border-bottom: none; }
+    }
   </style>
 </head>
 <body>
+  <div class="progress-track"><div id="scroll-progress-bar"></div></div>
+
+  <nav class="topbar" aria-label="Primary navigation">
+    <div class="topbar-inner">
+      <a class="brand-mark" href="https://radityobw.github.io/"><span class="brand-dot"></span>RADITYOBW / MONOGRAPH</a>
+      <div class="topbar-nav">
+        <a href="#sec-projects">Projects</a>
+        <a href="#sec-ecosystem">RyoCantSleep</a>
+        <a href="#sec-stack">Tech Stack</a>
+        <a href="https://github.com/radityobw">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="wrap">
-    <header class="hero">
-      <div class="hero-left">
-        <img src="/avatar.png" alt="Radityo Budi Waskito (@radityobw)" width="84" height="84" />
-        <div>
-          <h1>Radityo Budi Waskito (<code>@radityobw</code>)</h1>
+    <div class="monograph-grid">
+      <main class="chapters-col">
+        <section class="chapter" data-chapter="profile" id="sec-profile">
+          <span class="chapter-tag">01 / ENGINEERING PROFILE</span>
+          <h1>Radityo Budi Waskito <span class="handle">@radityobw</span></h1>
           <p class="sub">
             Informatics student at Universitas Sultan Ageng Tirtayasa (UNTIRTA) building offline static security analyzers (<strong>SIDIK</strong>, <strong>SIDIK-ML</strong>), the <strong>RyoCantSleep</strong> full-stack ecosystem (Next.js 16 monorepo, Prisma LMS, Upstash Redis API, and Dockerized cyber range), educational Godot software (<strong>Langkah Kecil</strong>), and Laravel platforms (<strong>SIBENGKEL</strong>).
           </p>
-        </div>
-      </div>
-      <div class="hero-actions">
-        <a class="btn docs" href="https://github.com/radityobw">GitHub</a>
-        <a class="btn" href="https://ryocantsleep.com">RyoCantSleep</a>
-        <a class="btn" href="https://linkedin.com/in/radityobw">LinkedIn</a>
-        <a class="btn" href="https://instagram.com/radityo_bw">Instagram</a>
-        <a class="btn" href="https://twitter.com/radityo_bw">X</a>
-        <a class="btn" href="https://www.youtube.com/@radityobw">YouTube</a>
-        <a class="btn" href="mailto:radityobudiw@gmail.com">Email</a>
-        <a class="btn" href="https://jurnal.mediaakademik.com/index.php/jma/article/view/9068/6647">JMA Paper</a>
-      </div>
-    </header>
+          <div class="metrics-strip">
+            <div class="metric-cell">
+              <span class="metric-val">5</span>
+              <span class="metric-lbl">Public Repositories</span>
+            </div>
+            <div class="metric-cell">
+              <span class="metric-val">4</span>
+              <span class="metric-lbl">Live Doc Hubs</span>
+            </div>
+            <div class="metric-cell">
+              <span class="metric-val">4</span>
+              <span class="metric-lbl">RyoCantSleep Apps</span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a class="btn docs" href="https://github.com/radityobw">GitHub</a>
+            <a class="btn" href="https://ryocantsleep.com">RyoCantSleep</a>
+            <a class="btn" href="https://linkedin.com/in/radityobw">LinkedIn</a>
+            <a class="btn" href="https://instagram.com/radityo_bw">Instagram</a>
+            <a class="btn" href="https://twitter.com/radityo_bw">X</a>
+            <a class="btn" href="https://www.youtube.com/@radityobw">YouTube</a>
+            <a class="btn" href="mailto:radityobudiw@gmail.com">Email</a>
+            <a class="btn" href="https://jurnal.mediaakademik.com/index.php/jma/article/view/9068/6647">JMA Paper</a>
+          </div>
+        </section>
 
-    <section>
-      <h2>Pinned &amp; Featured Public Projects (4)</h2>
-      <div class="grid">
+        <section class="chapter" data-chapter="opensource" id="sec-projects">
+          <span class="chapter-tag">02 / OPEN-SOURCE CATALOG</span>
+          <h2>Pinned &amp; Featured Public Projects (4)</h2>
+          <p class="section-note">Flagship repositories synchronized via GitHub API with automated release packaging and static documentation sites.</p>
+          <div class="grid">
         <article class="card featured-card accent-blue">
           <div class="card-top">
             <h3>SIDIK</h3>
@@ -342,13 +649,14 @@
           <div class="badges"><a href="https://github.com/radityobw/SIBENGKEL/releases/latest"><img src="https://img.shields.io/github/v/release/radityobw/SIBENGKEL?label=Release&color=ef4444&cacheSeconds=3600" alt="SIBENGKEL Release" /></a></div>
           <div class="links"><a class="btn docs" href="https://radityobw.github.io/SIBENGKEL/">Documentation</a><a class="btn primary" href="https://github.com/radityobw/SIBENGKEL">GitHub</a></div>
         </article>
-      </div>
-    </section>
+          </div>
+        </section>
 
-    <section>
-      <h2>RyoCantSleep Ecosystem (Multi-App Full-Stack &amp; Cyber Range)</h2>
-      <p class="section-note">Private R&amp;D repositories powering production educational platforms, APIs, and isolated security training infrastructure.</p>
-      <div class="grid">
+        <section class="chapter" data-chapter="ryocantsleep" id="sec-ecosystem">
+          <span class="chapter-tag">03 / PRIVATE INFRASTRUCTURE</span>
+          <h2>RyoCantSleep Ecosystem (Multi-App Full-Stack &amp; Cyber Range)</h2>
+          <p class="section-note">Private R&amp;D repositories powering production educational platforms, APIs, and isolated security training infrastructure.</p>
+          <div class="grid">
         <article class="card featured-card accent-indigo">
           <div class="card-top">
             <div>
@@ -393,26 +701,14 @@
           <p>Dockerized hybrid cyber range isolating frontend_net, backend_net, and sandbox_net behind Nginx with SQLi, IDOR, SSRF, and RCE sandboxes, dynamic UUID flags, Grafana + Loki logs, and a 6-stage DevSecOps pipeline (Gitleaks, Trivy, OWASP ZAP, k6, Syft SBOM).</p>
           <div class="links"><span class="status-note">Isolated Docker / CI Infrastructure</span></div>
         </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Other Public Repositories (1)</h2>
-      <div class="grid">
-        <article class="card repo-card">
-          <div class="card-top">
-            <h3>uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama</h3>
-            <span class="lang-pill">Statistics</span>
           </div>
-          <p>Tugas Kelompok B3 - Probabilitas dan Statistika (Uji Hipotesis Rata-Rata 2 Populasi Ragam Asumsi Sama).</p>
-          <div class="links"><a class="btn primary" href="https://github.com/radityobw/uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama">GitHub</a></div>
-        </article>
-      </div>
-    </section>
+        </section>
 
-    <section>
-      <h2>Applied Tech Stack</h2>
-      <div class="stack-grid">
+        <section class="chapter" data-chapter="stack" id="sec-stack">
+          <span class="chapter-tag">04 / CAPABILITY MATRIX</span>
+          <h2>Applied Tech Stack</h2>
+          <p class="section-note">Languages, frameworks, data stores, and infrastructure verified across production deployments.</p>
+          <div class="stack-grid">
         <div class="stack-group">
           <h3>Languages</h3>
           <div class="chips"><span class="chip">Python</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">C++</span><span class="chip">HTML5</span><span class="chip">CSS3</span></div>
@@ -433,13 +729,50 @@
           <h3>Game Dev &amp; 3D</h3>
           <div class="chips"><span class="chip">Godot v4.5</span><span class="chip">Blender</span></div>
         </div>
+          </div>
+          
+    <section>
+      <h2>Other Public Repositories (1)</h2>
+      <div class="grid">
+        <article class="card repo-card">
+          <div class="card-top">
+            <h3>uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama</h3>
+            <span class="lang-pill">Statistics</span>
+          </div>
+          <p>Tugas Kelompok B3 - Probabilitas dan Statistika (Uji Hipotesis Rata-Rata 2 Populasi Ragam Asumsi Sama).</p>
+          <div class="links"><a class="btn primary" href="https://github.com/radityobw/uji-hipotesis_rata-rata-2-populasi_ragam-asumsi-sama">GitHub</a></div>
+        </article>
       </div>
     </section>
+        </section>
+      </main>
+
+      <aside class="vitrine-col" aria-label="Interactive 3D Mascot Stage">
+        <div id="stage-3d">
+          <span class="stage-tick tl"></span>
+          <span class="stage-tick tr"></span>
+          <span class="stage-tick bl"></span>
+          <span class="stage-tick br"></span>
+          <div class="stage-hud-top">
+            <span id="stage-chapter">01 / PROFILE</span>
+            <span>DRAG TO ORBIT</span>
+          </div>
+          <img class="stage-fallback" src="/avatar.png" alt="Radityo Budi Waskito (@radityobw)" width="148" height="148" />
+          <canvas id="canvas-3d" aria-label="Interactive 3D RyoCantSleep Royale Mascot"></canvas>
+          <div class="stage-hud-bottom">
+            <span>ryocantsleep-royale.glb</span>
+            <span>SCROLL CHOREOGRAPHY</span>
+          </div>
+        </div>
+      </aside>
+    </div>
 
     <footer>
-      <span>Radityo Budi Waskito (@radityobw) - Auto-synced from GitHub API (2026-11-25)</span>
+      <span>Radityo Budi Waskito (@radityobw) - Auto-synced from GitHub API (2026-11-26)</span>
       <span><a href="https://github.com/radityobw">GitHub</a> | <a href="https://ryocantsleep.com">RyoCantSleep</a> | <a href="https://linkedin.com/in/radityobw">LinkedIn</a> | <a href="https://instagram.com/radityo_bw">Instagram</a> | <a href="https://twitter.com/radityo_bw">X</a> | <a href="https://www.youtube.com/@radityobw">YouTube</a> | <a href="https://radityobw.github.io/SIDIK/">SIDIK</a> | <a href="https://radityobw.github.io/SIDIK-ML/">SIDIK-ML</a> | <a href="https://radityobw.github.io/SIBENGKEL/">SIBENGKEL</a> | <a href="https://radityobw.github.io/langkah-kecil/">Langkah Kecil</a> | <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </div>
+
+  <script type="module" src="/scene3d.js"></script>
 </body>
 </html>
