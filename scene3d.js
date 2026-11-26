@@ -193,7 +193,7 @@ function initShowcase() {
 
   const loader = new GLTFLoader();
   loader.load(
-    './models/ryocantsleep-royale.glb',
+    './models/radityobw.glb',
     (gltf) => {
       const model = gltf.scene;
       model.traverse((obj) => {

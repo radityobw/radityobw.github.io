@@ -939,9 +939,9 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
             <span>DRAG TO ORBIT</span>
           </div>
           <img class="stage-fallback" src="/avatar.png" alt="Radityo Budi Waskito (@{GITHUB_USER})" width="148" height="148" />
-          <canvas id="canvas-3d" aria-label="Interactive 3D RyoCantSleep Royale Mascot"></canvas>
+          <canvas id="canvas-3d" aria-label="Interactive 3D RadityoBW Mascot"></canvas>
           <div class="stage-hud-bottom">
-            <span>ryocantsleep-royale.glb</span>
+            <span>radityobw.glb</span>
             <span>SCROLL CHOREOGRAPHY</span>
           </div>
         </div>
@@ -985,10 +985,10 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
                 src = ROOT_DIR / asset
                 if src.is_file():
                     shutil.copy2(src, target / asset)
-            glb_src = ROOT_DIR / "models" / "ryocantsleep-royale.glb"
+            glb_src = ROOT_DIR / "models" / "radityobw.glb"
             if glb_src.is_file():
                 (target / "models").mkdir(parents=True, exist_ok=True)
-                shutil.copy2(glb_src, target / "models" / "ryocantsleep-royale.glb")
+                shutil.copy2(glb_src, target / "models" / "radityobw.glb")
 
     print(f"Built root portfolio ({len(repos)} repos, pages={pages_repos}, source={source}) -> {out_dir}")
 
