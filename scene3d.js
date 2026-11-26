@@ -78,21 +78,51 @@ function initShowcase() {
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
   camera.position.set(0, 0.04, 4.15);
 
-  const keyLight = new THREE.DirectionalLight(0xfff9f4, 2.1);
+  const keyLight = new THREE.DirectionalLight(0xfff9f4, 2.4);
   keyLight.position.set(3.4, 4.2, 5.2);
   scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0xeef4ff, 1.0);
+  const fillLight = new THREE.DirectionalLight(0xeef4ff, 1.15);
   fillLight.position.set(-4.0, 1.5, 2.5);
   scene.add(fillLight);
 
-  const crimsonRim = new THREE.SpotLight(0xd70015, 7.0, 16, Math.PI / 3.2, 0.55, 1.2);
+  const silverRim = new THREE.DirectionalLight(0xdbeafe, 2.0);
+  silverRim.position.set(2.4, 3.6, -3.2);
+  scene.add(silverRim);
+
+  const crimsonRim = new THREE.SpotLight(0xe11d48, 8.5, 16, Math.PI / 3.2, 0.55, 1.2);
   crimsonRim.position.set(-2.6, 2.0, -3.2);
   scene.add(crimsonRim);
 
-  const topHairLight = new THREE.DirectionalLight(0x0071e3, 0.75);
+  const topHairLight = new THREE.DirectionalLight(0x0a84ff, 0.95);
   topHairLight.position.set(2.2, 3.8, -2.5);
   scene.add(topHairLight);
+
+  function applyTheme() {
+    const isLight = document.documentElement.dataset.theme === 'light';
+    if (isLight) {
+      renderer.toneMappingExposure = 1.08;
+      scene.environmentIntensity = 0.72;
+      keyLight.intensity = 2.1;
+      fillLight.intensity = 1.0;
+      silverRim.intensity = 0.6;
+      crimsonRim.intensity = 6.5;
+      topHairLight.intensity = 0.75;
+    } else {
+      renderer.toneMappingExposure = 1.12;
+      scene.environmentIntensity = 0.95;
+      keyLight.intensity = 2.4;
+      fillLight.intensity = 1.15;
+      silverRim.intensity = 2.0;
+      crimsonRim.intensity = 8.5;
+      topHairLight.intensity = 0.95;
+    }
+  }
+  applyTheme();
+  new MutationObserver(applyTheme).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
 
   const pivot = new THREE.Group();
   scene.add(pivot);

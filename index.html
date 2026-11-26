@@ -35,6 +35,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>(function(){try{var t=localStorage.getItem('radityobw_theme');document.documentElement.dataset.theme=(t==='light')?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();</script>
 
   <script type="importmap">
   {
@@ -135,22 +136,57 @@
 
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #f5f5f7;
-      --surface-2: #ffffff;
-      --hairline: rgba(0, 0, 0, 0.08);
-      --hairline-strong: rgba(0, 0, 0, 0.16);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --crimson: #d70015;
-      --blue: #0071e3;
+      --bg: #000000;
+      --topbar-bg: rgba(0, 0, 0, 0.72);
+      --surface: #141416;
+      --surface-2: #1c1c1f;
+      --hairline: rgba(255, 255, 255, 0.11);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f5f5f7;
+      --heading: #ffffff;
+      --lead: #c7c7cc;
+      --body-sub: #a1a1a6;
+      --muted: #86868b;
+      --crimson: #ff375f;
+      --blue: #0a84ff;
+      --blue-hover: #2994ff;
       --indigo: #5e5ce6;
-      --amber: #c97a00;
-      --green: #1d8348;
-      --red: #d70015;
+      --amber: #ffd60a;
+      --green: #30d158;
+      --pill-bg: #1d1d1f;
+      --btn-bg: rgba(255, 255, 255, 0.08);
+      --btn-hover: rgba(255, 255, 255, 0.14);
+      --stage-bg: radial-gradient(ellipse 68% 66% at 50% 48%, #3d4454 0%, #20242f 46%, #111319 78%, #090a0d 100%);
+      --stage-shadow: 0 24px 56px rgba(0, 0, 0, 0.48);
+      --stage-pill: rgba(255, 255, 255, 0.1);
       --mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace;
       --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
       --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
+    }
+    html[data-theme="light"] {
+      --bg: #ffffff;
+      --topbar-bg: rgba(255, 255, 255, 0.78);
+      --surface: #f5f5f7;
+      --surface-2: #ffffff;
+      --hairline: rgba(0, 0, 0, 0.08);
+      --card-border: rgba(0, 0, 0, 0.05);
+      --text: #1d1d1f;
+      --heading: #1d1d1f;
+      --lead: #424245;
+      --body-sub: #424245;
+      --muted: #6e6e73;
+      --crimson: #d70015;
+      --blue: #0071e3;
+      --blue-hover: #0077ed;
+      --indigo: #5e5ce6;
+      --amber: #c97a00;
+      --green: #1d8348;
+      --pill-bg: #ffffff;
+      --btn-bg: rgba(0, 0, 0, 0.05);
+      --btn-hover: rgba(0, 0, 0, 0.09);
+      --stage-bg: radial-gradient(circle at 50% 42%, #ffffff 0%, #f1f1f4 72%, #e8e8ed 100%);
+      --stage-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+      --stage-pill: rgba(255, 255, 255, 0.84);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -160,8 +196,10 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.58;
+      overflow-x: clip;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      transition: background-color 0.22s ease, color 0.22s ease;
     }
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -188,17 +226,17 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      height: 52px;
-      background: rgba(255, 255, 255, 0.78);
+      min-height: 52px;
+      background: var(--topbar-bg);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--hairline);
     }
     .topbar-inner {
-      max-width: 1180px;
-      height: 100%;
+      max-width: 1220px;
+      min-height: 52px;
       margin: 0 auto;
-      padding: 0 28px;
+      padding: 10px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -214,6 +252,7 @@
       font-weight: 600;
       font-size: 14px;
       letter-spacing: -0.01em;
+      white-space: nowrap;
     }
     .brand-mark:hover { text-decoration: none; }
     .brand-dot {
@@ -222,51 +261,74 @@
       border-radius: 50%;
       background: var(--crimson);
       display: inline-block;
+      flex-shrink: 0;
     }
     .topbar-nav {
       display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
+      align-items: center;
+      gap: 20px;
     }
     .topbar-nav a {
       color: var(--muted);
       font-weight: 500;
+      white-space: nowrap;
       transition: color 0.15s ease;
     }
     .topbar-nav a:hover {
       color: var(--text);
       text-decoration: none;
     }
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 980px;
+      border: 1px solid var(--hairline);
+      background: var(--btn-bg);
+      color: var(--text);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+    .theme-btn:hover { background: var(--btn-hover); }
+    .theme-btn svg { width: 15px; height: 15px; display: block; }
+    html[data-theme="dark"] .icon-moon { display: none; }
+    html[data-theme="light"] .icon-sun { display: none; }
 
     .wrap {
-      max-width: 1180px;
+      max-width: 1220px;
       margin: 0 auto;
       padding: 56px 28px 84px;
     }
     .monograph-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-      gap: 56px;
+      grid-template-columns: minmax(0, 1.18fr) minmax(350px, 0.82fr);
+      gap: 48px;
       align-items: start;
     }
     .vitrine-col {
       position: sticky;
       top: 84px;
       order: 2;
+      min-width: 0;
     }
     .chapters-col {
       order: 1;
       min-width: 0;
+      max-width: 100%;
     }
 
     #stage-3d {
       position: relative;
       height: min(560px, calc(100vh - 120px));
-      min-height: 420px;
-      background: radial-gradient(circle at 50% 42%, #ffffff 0%, #f1f1f4 72%, #e8e8ed 100%);
-      border: 1px solid rgba(0, 0, 0, 0.06);
+      min-height: 400px;
+      background: var(--stage-bg);
+      border: 1px solid var(--card-border);
       border-radius: 28px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--stage-shadow);
       overflow: hidden;
       cursor: grab;
       user-select: none;
@@ -289,10 +351,10 @@
       z-index: 4;
     }
     #stage-chapter {
-      background: rgba(255, 255, 255, 0.84);
+      background: var(--stage-pill);
       backdrop-filter: blur(12px);
       color: var(--text);
-      border: 1px solid rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--hairline);
       padding: 4px 12px;
       border-radius: 980px;
       font-weight: 600;
@@ -337,9 +399,11 @@
     #stage-3d.is-ready .stage-fallback { display: none; }
 
     .chapter {
-      padding-bottom: 64px;
-      margin-bottom: 64px;
+      padding-bottom: 60px;
+      margin-bottom: 60px;
       border-bottom: 1px solid var(--hairline);
+      min-width: 0;
+      max-width: 100%;
     }
     .chapter:last-child {
       border-bottom: none;
@@ -358,11 +422,12 @@
     h1 {
       font-family: var(--display);
       margin: 0 0 16px;
-      font-size: clamp(34px, 4.4vw, 52px);
+      font-size: clamp(32px, 4.2vw, 50px);
       font-weight: 700;
       line-height: 1.06;
       letter-spacing: -0.035em;
-      color: var(--text);
+      color: var(--heading);
+      overflow-wrap: break-word;
     }
     .handle {
       font-family: var(--sans);
@@ -375,24 +440,26 @@
     }
     .sub {
       margin: 0 0 28px;
-      color: #424245;
+      color: var(--lead);
       font-size: 17px;
       line-height: 1.55;
-      max-width: 620px;
+      max-width: 640px;
     }
     .metrics-strip {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       border-radius: 20px;
       background: var(--surface);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--card-border);
       margin-bottom: 28px;
       overflow: hidden;
+      min-width: 0;
     }
     .metric-cell {
       padding: 16px 18px;
       border-right: 1px solid var(--hairline);
       font-variant-numeric: tabular-nums;
+      min-width: 0;
     }
     .metric-cell:last-child { border-right: none; }
     .metric-val {
@@ -400,7 +467,7 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.025em;
-      color: var(--text);
+      color: var(--heading);
       display: block;
     }
     .metric-lbl {
@@ -418,8 +485,9 @@
       font-size: 28px;
       font-weight: 700;
       letter-spacing: -0.025em;
-      color: var(--text);
+      color: var(--heading);
       margin: 0 0 10px;
+      overflow-wrap: break-word;
     }
     .section-note {
       margin: 0 0 24px;
@@ -428,37 +496,49 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
+      min-width: 0;
     }
     .card {
       background: var(--surface);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--card-border);
       border-radius: 24px;
       padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      border-color: var(--hairline);
     }
     .accent-blue { border-left: 3px solid var(--blue); }
     .accent-indigo { border-left: 3px solid var(--indigo); }
     .accent-amber { border-left: 3px solid var(--amber); }
     .accent-green { border-left: 3px solid var(--green); }
     .accent-red { border-left: 3px solid var(--crimson); }
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .card-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      min-width: 0;
+    }
+    .card-top > div { min-width: 0; flex: 1 1 130px; }
     .card-top h3 {
       font-family: var(--display);
       margin: 0;
       font-size: 18px;
       font-weight: 600;
       letter-spacing: -0.02em;
-      color: var(--text);
-      word-break: break-word;
+      color: var(--heading);
+      overflow-wrap: anywhere;
     }
     .lang-pill {
       flex-shrink: 0;
@@ -466,9 +546,10 @@
       font-weight: 600;
       padding: 3px 10px;
       border-radius: 980px;
-      background: #ffffff;
+      background: var(--pill-bg);
       border: 1px solid var(--hairline);
       color: var(--muted);
+      max-width: 100%;
     }
     .status-pill {
       display: inline-block;
@@ -477,14 +558,15 @@
       font-weight: 500;
       padding: 2px 9px;
       border-radius: 980px;
-      background: rgba(0, 0, 0, 0.04);
+      background: var(--btn-bg);
       color: var(--muted);
     }
     .status-note {
       font-size: 12px;
       color: var(--muted);
     }
-    .card p { margin: 0; color: #424245; font-size: 14px; line-height: 1.55; flex-grow: 1; }
+    .card p { margin: 0; color: var(--body-sub); font-size: 14px; line-height: 1.55; flex-grow: 1; overflow-wrap: break-word; }
+    :not(pre) > code { overflow-wrap: anywhere; word-break: break-word; font-size: 0.9em; }
     .badges { display: flex; flex-wrap: wrap; gap: 6px; }
     .links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
     .btn {
@@ -494,10 +576,10 @@
       border-radius: 980px;
       font-size: 13px;
       font-weight: 500;
-      background: rgba(0, 0, 0, 0.045);
+      background: var(--btn-bg);
       color: var(--text);
       border: 1px solid transparent;
-      transition: background 0.15s ease, transform 0.15s ease;
+      transition: background 0.15s ease;
     }
     .btn.docs {
       background: var(--blue);
@@ -506,21 +588,23 @@
     }
     .btn:hover {
       text-decoration: none;
-      background: rgba(0, 0, 0, 0.09);
+      background: var(--btn-hover);
     }
     .btn.docs:hover {
-      background: #0077ed;
+      background: var(--blue-hover);
     }
     .stack-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 14px;
+      min-width: 0;
     }
     .stack-group {
       background: var(--surface);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 18px;
+      min-width: 0;
     }
     .stack-group h3 {
       margin: 0 0 12px;
@@ -536,7 +620,7 @@
       font-weight: 500;
       padding: 4px 10px;
       border-radius: 980px;
-      background: #ffffff;
+      background: var(--pill-bg);
       border: 1px solid var(--hairline);
       color: var(--text);
     }
@@ -560,6 +644,12 @@
       .metric-cell { border-right: none; border-bottom: 1px solid var(--hairline); }
       .metric-cell:last-child { border-bottom: none; }
     }
+    @media (max-width: 640px) {
+      .wrap { padding: 32px 18px 64px; }
+      .topbar-inner { padding: 10px 16px; gap: 10px; }
+      .topbar-nav { gap: 12px; font-size: 12px; }
+      .topbar-nav a:nth-child(n+4) { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -571,8 +661,12 @@
       <div class="topbar-nav">
         <a href="#sec-projects">Projects</a>
         <a href="#sec-ecosystem">RyoCantSleep</a>
-        <a href="#sec-stack">Tech Stack</a>
+        <a href="#sec-stack">Stack</a>
         <a href="https://github.com/radityobw">GitHub</a>
+        <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </div>
     </div>
   </nav>
@@ -773,6 +867,17 @@
     </footer>
   </div>
 
+  <script>
+    (function(){
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function(){
+        var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('radityobw_theme', next); } catch(e) {}
+      });
+    })();
+  </script>
   <script type="module" src="/scene3d.js"></script>
 </body>
 </html>
