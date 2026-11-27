@@ -13,9 +13,9 @@ Personal developer portfolio & GitHub Pages root hub for **Radityo Budi Waskito 
 ## Setup on GitHub
 
 1. Create a public GitHub repository named **`radityobw.github.io`** under `github.com/radityobw`.
-2. Push this directory to `main`:
+2. Push this directory to `main` (run from the folder that contains this repository):
    ```powershell
-   cd d:\Downloads\SIDIK-root\radityobw.github.io
+   cd radityobw.github.io
    git init -b main
    git add .
    git commit -m "feat: add auto-syncing personal GitHub Pages portfolio and root sitemaps"

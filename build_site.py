@@ -682,10 +682,11 @@ def build_site(out_dir: Path, offline: bool = False, update_root: bool = False) 
       width: 148px;
       height: 148px;
       object-fit: contain;
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 12px;
+      filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.28)) drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
       z-index: 1;
+    }}
+    html[data-theme="light"] .stage-fallback {{
+      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.12));
     }}
     #stage-3d.is-ready .stage-fallback {{ display: none; }}
 
